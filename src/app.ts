@@ -7,7 +7,7 @@ import morgan from "morgan";
 import { stream } from "./config/winston";
 import SignUpRouter from "./routes/user/sign-up";
 
-import { ErrorHandler } from "@pinkelgrg/app-common";
+import { ErrorHandler, NotFoundError } from "@pinkelgrg/app-common";
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.use(compression());
 app.use(
     morgan(
         ':remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time[digits]ms :req[Content-Type]',
-        { stream: stream }
+        { stream }
     )
 );
 // parse application/x-www-form-urlencoded
@@ -37,7 +37,7 @@ app.use(
 app.use(SignUpRouter);
 
 app.all("*", () => {
-    console.error("not found 404");
+    throw new NotFoundError("404: Not Found");
 });
 
 app.use(ErrorHandler);
