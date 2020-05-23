@@ -1,27 +1,45 @@
 import express from "express";
-import dotenv from "dotenv";
 import cookieSession from "cookie-session";
-import { json } from "body-parser";
+import bodyParser, { json } from "body-parser";
 import helmet from "helmet";
-import TestRouter from "./routes";
+import compression from "compression";
+import morgan from "morgan";
+import { stream } from "./config/winston";
+import SignUpRouter from "./routes/user/sign-up";
 
-dotenv.config();
+import { ErrorHandler } from "@pinkelgrg/app-common";
+
 const app = express();
 
-app.set("trust proxy", true);
 app.use(helmet());
+app.set("trust proxy", true);
+app.use(compression());
+
+app.use(
+    morgan(
+        ':remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time[digits]ms :req[Content-Type]',
+        { stream: stream }
+    )
+);
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
 app.use(json());
+
 app.use(
     cookieSession({
         signed: false,
-        secure: process.env.NODE_ENV !== "test"
+        secure: process.env.NODE_ENV === "production"
     })
 );
 
-app.use(TestRouter);
+app.use(SignUpRouter);
 
 app.all("*", () => {
     console.error("not found 404");
 });
+
+app.use(ErrorHandler);
 
 export default app;

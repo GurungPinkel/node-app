@@ -8,7 +8,7 @@
         "plugin:import/errors",
         "plugin:import/warnings",
         "plugin:import/typescript",
-        "prettier/@typescript-eslint",
+        "prettier/@typescript-eslint/recommended",
         "plugin:prettier/recommended"
     ],
     "globals": {
