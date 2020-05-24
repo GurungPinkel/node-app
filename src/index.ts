@@ -1,16 +1,9 @@
-import dotenv from "dotenv";
-dotenv.config();
+import app from "./app";
 import { logger } from "./config/winston";
 import { sequelize } from "./config/sequelize";
-import app from "./app";
 
-const { APP_PORT, MONGO_URI } = process.env;
-
-if (!MONGO_URI) {
-    logger.error("MongoDB configuration missing");
-    throw new Error("MongoDB configuration missing");
-}
-const start = async () => {
+const { APP_PORT } = process.env;
+const start = () => {
     sequelize
         .authenticate()
         .then(() => {

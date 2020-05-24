@@ -2,20 +2,30 @@ import path from "path";
 import winston, { createLogger, format } from "winston";
 import split from "split";
 import "winston-daily-rotate-file";
+
 const { combine, timestamp, printf, colorize } = format;
 
-const myFormat = printf(({ level, message, timestamp }) => {
-    return `${level}: ${timestamp}: ${message}`;
+const logFormat = printf((data) => {
+    return `[${data.level}]: ${data.timestamp}: ${data.message}`;
 });
 
-const transport = {
+const errorFormat = printf((data) => {
+    return `[${data.level}]: ${data.timestamp} - ${data.stack}`;
+});
+
+const consoleFormat = printf((data) => {
+    return `[${data.level}]: ${data.timestamp} : ${data.message} ${data.stack || ""} `;
+});
+
+const transports = {
     app: new winston.transports.DailyRotateFile({
         filename: path.join(__dirname, "../../logs/app-%DATE%.log"),
         datePattern: "YYYY-MM-DD HH",
         zippedArchive: true,
         maxSize: "20m",
         maxFiles: "14d",
-        level: "debug"
+        level: "debug",
+        format: logFormat
     }),
     error: new winston.transports.DailyRotateFile({
         filename: path.join(__dirname, "../../logs/error-%DATE%.log"),
@@ -23,7 +33,8 @@ const transport = {
         zippedArchive: true,
         maxSize: "20m",
         maxFiles: "14d",
-        level: "error"
+        level: "error",
+        format: errorFormat
     }),
     exceptions: new winston.transports.DailyRotateFile({
         filename: path.join(__dirname, "../../logs/exceptions-%DATE%.log"),
@@ -31,24 +42,49 @@ const transport = {
         zippedArchive: true,
         maxSize: "20m",
         maxFiles: "14d",
-        handleExceptions: true
+        format: errorFormat
     }),
-    console: new winston.transports.Console({ level: "debug" })
+    console: new winston.transports.Console({
+        level: "debug",
+        format: consoleFormat
+    })
 };
 
 const logger = createLogger({
     format: combine(
+        format.errors({ stack: true }),
         format((info) => {
-            info.level = info.level.toUpperCase();
-            return info;
+            return {
+                ...info,
+                level: info.level.toUpperCase()
+            };
         })(),
-        timestamp(),
-        myFormat
+        colorize(),
+        timestamp()
     ),
-    transports: [transport.app, transport.console, transport.error, transport.exceptions]
+    transports: [transports.console, transports.app, transports.error],
+    exceptionHandlers: [
+        new winston.transports.DailyRotateFile({
+            filename: path.join(__dirname, "../../logs/exceptions-%DATE%.log"),
+            datePattern: "YYYY-MM-DD HH",
+            zippedArchive: true,
+            maxSize: "20m",
+            maxFiles: "14d"
+        })
+    ]
+    // Logging rejectionHandlers is not working at the moment: see:https://github.com/winstonjs/winston/issues/1801
+    // rejectionHandlers: [
+    //     new winston.transports.DailyRotateFile({
+    //         filename: path.join(__dirname, "../../logs/exceptions-%DATE%.log"),
+    //         datePattern: "YYYY-MM-DD HH",
+    //         zippedArchive: true,
+    //         maxSize: "20m",
+    //         maxFiles: "14d"
+    //     })
+    // ]
 });
 
-const stream = split().on("data", function (line) {
+const stream = split().on("data", (line) => {
     logger.debug(line);
 });
 

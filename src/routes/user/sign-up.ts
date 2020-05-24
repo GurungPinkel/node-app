@@ -1,9 +1,8 @@
 import express, { Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
 import jwt from "jsonwebtoken";
-import { ValidateRequest, BadRequestError } from "@pinkelgrg/app-common";
-import { FindByEmail } from "../../services/user/find";
-import { CreateUser } from "../../services/user/create";
+import { ValidateRequest } from "@pinkelgrg/app-common";
+import { CreateUserService } from "../../service/user/sign-up";
 import { logger } from "../../config/winston";
 
 const router = express.Router();
@@ -39,35 +38,28 @@ const SignUpRouter = router.post(
     async (req: Request, res: Response, next: NextFunction) => {
         const { email, password } = req.body;
         try {
-            // check if user exists
-            const isUser = await FindByEmail(email);
-            if (isUser) {
-                logger.debug(`User already exists - ${isUser.email}`);
-                return next(new BadRequestError("User already exists"));
-            }
-            const user = await CreateUser({ email, password });
+            const user = await CreateUserService({ email, password, isActive: true });
+            const { id } = user;
 
             // create token
             const userJwt = jwt.sign(
                 {
-                    id: user.id,
-                    email: user.email
+                    id,
+                    email
                 },
                 process.env.JWT_KEY!
             );
+
             // add token as cookie
             req.session = {
                 jwt: userJwt
             };
-
-            const { id } = user;
             logger.debug(`New User Created!: ${email}`);
             return res.status(201).send({ id, email });
         } catch (err) {
-            logger.error(err);
             return next(err);
         }
     }
 );
 
-export default SignUpRouter;
+export { SignUpRouter };

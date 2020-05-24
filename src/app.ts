@@ -1,13 +1,14 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cookieSession from "cookie-session";
 import bodyParser, { json } from "body-parser";
 import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
-import { stream } from "./config/winston";
-import SignUpRouter from "./routes/user/sign-up";
+import "./config/env";
+import { NotFoundError, ErrorHandler } from "@pinkelgrg/app-common";
+import { logger, stream } from "./config/winston";
 
-import { ErrorHandler, NotFoundError } from "@pinkelgrg/app-common";
+import { SignUpRouter } from "./routes/user/sign-up";
 
 const app = express();
 
@@ -21,16 +22,16 @@ app.use(
         { stream }
     )
 );
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(json());
-
 app.use(
     cookieSession({
         signed: false,
-        secure: process.env.NODE_ENV === "production"
+        secure: process.env.NODE_ENV !== "test"
     })
 );
 
@@ -40,6 +41,10 @@ app.all("*", () => {
     throw new NotFoundError("404: Not Found");
 });
 
-app.use(ErrorHandler);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    logger.error(err);
+    ErrorHandler(err, res);
+});
 
 export default app;
