@@ -3,6 +3,7 @@ import { UserAttributes } from "../../models/user";
 import { CreateUserDAO } from "../../dao/user/sign-up";
 import { findByEmailDAO } from "../../dao/user/find";
 import { Password } from "../../utils/password";
+import { logger } from "../../config/winston";
 
 /*
     checks if user exists:
@@ -20,6 +21,7 @@ const CreateUserService = async (user: UserAttributes) => {
             password: hashedPassword
         });
     }
+    logger.info(`User with ${user.email} already exists`);
     throw new BadRequestError(`User with ${user.email} already exists`);
 };
 

@@ -5,10 +5,12 @@ import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
 import "./config/env";
-import { NotFoundError, ErrorHandler } from "@pinkelgrg/app-common";
+import { NotFoundError, ErrorHandler, CustomError } from "@pinkelgrg/app-common";
 import { logger, stream } from "./config/winston";
 
 import { SignUpRouter } from "./routes/user/sign-up";
+import { SignInRouter } from "./routes/user/sign-in";
+import { SignOutRouter } from "./routes/user/sign-out";
 
 const app = express();
 
@@ -36,6 +38,8 @@ app.use(
 );
 
 app.use(SignUpRouter);
+app.use(SignInRouter);
+app.use(SignOutRouter);
 
 app.all("*", () => {
     throw new NotFoundError("404: Not Found");
@@ -43,7 +47,9 @@ app.all("*", () => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    logger.error(err);
+    if (!(err instanceof CustomError)) {
+        logger.error(err);
+    }
     ErrorHandler(err, res);
 });
 

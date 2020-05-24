@@ -12,8 +12,7 @@ create schema authentication;
 drop table USERS;
 create table if not exists authentication.USERS
 (
-	ID int auto_increment
-		primary key,
+	ID int auto_increment primary key,
 	EMAIL varchar(255) not null,
 	PASSWORD varchar(255) not null,
 	IS_ACTIVE tinyint(1) default 1 not null,

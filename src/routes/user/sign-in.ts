@@ -1,19 +1,19 @@
 import express, { Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
 import { ValidateRequest } from "@pinkelgrg/app-common";
-import { CreateUserService } from "../../service/user/sign-up";
+import { VerifyCredentials } from "../../service/user/sign-in";
 import { generateJWT } from "./token";
 import { logger } from "../../config/winston";
 
 const router = express.Router();
 
 /*
-    @param
-    email: string
-    password: string
+    Param:
+        email:string
+        password: string
 */
-const SignUpRouter = router.post(
-    "/api/user/signup",
+const SignInRouter = router.post(
+    "/api/user/signin",
     [
         body("email")
             .exists()
@@ -38,23 +38,19 @@ const SignUpRouter = router.post(
     async (req: Request, res: Response, next: NextFunction) => {
         const { email, password } = req.body;
         try {
-            const user = await CreateUserService({ email, password, isActive: true });
+            const user = await VerifyCredentials(email, password);
             const { id } = user;
-
-            // get token
             const userJwt = generateJWT(id, email);
-
-            // add token as cookie
             req.session = {
                 jwt: userJwt
             };
 
-            logger.debug(`New User Created!: ${email}`);
-            return res.status(201).send({ id, email });
+            logger.debug(`User loggedIn!: ${email}`);
+            return res.status(200).send({ id, email });
         } catch (err) {
             return next(err);
         }
     }
 );
 
-export { SignUpRouter };
+export { SignInRouter };
