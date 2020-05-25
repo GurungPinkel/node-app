@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: pinkelgrg/app-authentication
+          env:
+            - name: MYSQL_AQUIRE
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: MYSQL_AQUIRE
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: MYSQL_DATABASE
+            - name: MYSQL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: MYSQL_HOST
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: MYSQL_PASSWORD
+            - name: MYSQL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: MYSQL_USERNAME
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: JWT_KEY
+            - name: MYSQL_IDLE
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: MYSQL_IDLE
+            - name: MYSQL_MAX_POOL
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: MYSQL_MAX_POOL
+            - name: MYSQL_MIN_POOL
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: MYSQL_MIN_POOL
+            - name: MYSQL_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: MYSQL_PORT
+            - name: APP_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: APP_PORT
