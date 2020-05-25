@@ -2,7 +2,7 @@
 
 ```
 
-$ kubectl create secret generic environment --from-env-file=.env
+$ kubectl create secret generic environment --from-env-file=.env.local
 
 $ kubectl delete secret environment
 
