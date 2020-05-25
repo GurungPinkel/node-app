@@ -21,7 +21,7 @@
    - Run the following commands
 
      ```
-       $ cd skaffold
+       $ cd node-app/skaffold
 
        $ kubectl create secret generic environment --from-env-file=.env
 
