@@ -12,16 +12,18 @@ import { logger } from "../../config/winston";
     Set password as hashed Password
     Create user
 */
+
 const CreateUserService = async (user: UserAttributes) => {
     const existingUser = await findByEmailDAO(user.email);
     if (!existingUser) {
         const hashedPassword = await Password.hash(user.password);
-        return CreateUserDAO({
+        const newUser = await CreateUserDAO({
             ...user,
             password: hashedPassword
         });
+        return newUser;
     }
-    logger.info(`User with ${user.email} already exists`);
+    logger.debug(`User with ${user.email} already exists`);
     throw new BadRequestError(`User with ${user.email} already exists`);
 };
 

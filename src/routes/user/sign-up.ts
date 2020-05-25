@@ -29,7 +29,9 @@ const SignUpRouter = router.post(
             .trim()
             .isLength({ min: 8, max: 20 })
             .withMessage("Invalid Password! Password must be between 8-20 characters")
-            .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$.!%*#?&])[A-Za-z\d@$.!%*#?&]{8,}$/)
+            .matches(
+                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{8,20}$/
+            )
             .withMessage(
                 "Invalid Password! Password must contain atleast 1 special character and 1 number"
             )
@@ -52,6 +54,7 @@ const SignUpRouter = router.post(
             logger.debug(`New User Created!: ${email}`);
             return res.status(201).send({ id, email });
         } catch (err) {
+            logger.debug(err);
             return next(err);
         }
     }

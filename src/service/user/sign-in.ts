@@ -9,7 +9,7 @@ export const VerifyCredentials = async (email: string, password: string) => {
         logger.info(`Invalid email. User does not exist: ${email}`);
         throw new BadRequestError("Invalid Credentials");
     }
-    const isPasswordMatch = Password.compare(user.password, password);
+    const isPasswordMatch = await Password.compare(user.password, password);
 
     if (!isPasswordMatch) {
         logger.info(`Invalid password for user: ${email}`);
