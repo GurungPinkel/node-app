@@ -4,17 +4,17 @@ import { logger } from "../config/winston";
 // Disable the logger
 logger.silent = true;
 beforeAll(async () => {
-    sequelize
+    await sequelize
         .authenticate()
-        .then(() => {
-            // console.log("Connected to Database!");
+        .then(async () => {
+            await sequelize.sync();
         })
         .catch((err: Error) => {
             throw err;
         });
 });
 afterEach(async () => {
-    await sequelize.query("Delete from USERS where ID>0");
+    await sequelize.query("DELETE FROM USERS");
 });
 afterAll(async () => {
     await sequelize.close();
