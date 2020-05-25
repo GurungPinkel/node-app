@@ -1,7 +1,9 @@
 name: authentication-tests
 
 on:
-  pull_request
+  push:
+    paths: 
+      - 'authentication/**'
 jobs:
   build:
     runs-on: ubuntu-latest
