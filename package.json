@@ -8,6 +8,7 @@
         "dev": "DEBUG=* ts-node-dev --poll src/index.ts",
         "clean": "rimraf ./target/*",
         "test": "jest --watchAll --no-cache",
+        "test:ci": "jest",
         "test:coverage": "jest --watchAll --no-cache --coverage",
         "lint": "pretty-quick --staged && lint-staged",
         "now": "pretty-quick ."
