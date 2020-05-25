@@ -23,3 +23,13 @@ create table if not exists authentication.USERS
 );
 
 ```
+
+## Build Docker image:
+
+---
+
+```
+$ docker build -t pinkelgrg/app-authentication .
+$ docker push pinkelgrg/app-authentication
+
+```

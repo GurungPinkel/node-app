@@ -1,10 +1,11 @@
 {
-    "name": "base-node",
+    "name": "app-authentication",
     "version": "1.0.0",
-    "description": "",
+    "description": "authentication module",
     "main": "src/index.ts",
     "scripts": {
         "build": "npm run clean && tsc ",
+        "start": "ts-node-dev --poll src/index.ts",
         "dev": "DEBUG=* ts-node-dev --poll src/index.ts",
         "clean": "rimraf ./target/*",
         "test": "jest --watchAll --no-cache",
