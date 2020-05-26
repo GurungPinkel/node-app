@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
 import { ValidateRequest, BadRequestError } from "@pinkelgrg/app-common";
 import { VerifyCredentials } from "../../service/user/sign-in";
-import { generateJWT } from "./token";
+import { GenerateJWT } from "./token";
 import { logger } from "../../config/winston";
 
 const router = express.Router();
@@ -45,7 +45,7 @@ const SignInRouter = router.post(
             if (!isActive) {
                 return next(new BadRequestError("This account has been disabled!"));
             }
-            const userJwt = generateJWT(id, email);
+            const userJwt = GenerateJWT(id, email);
             req.session = {
                 jwt: userJwt
             };

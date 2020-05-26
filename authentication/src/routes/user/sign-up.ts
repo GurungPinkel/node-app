@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
 import { ValidateRequest } from "@pinkelgrg/app-common";
 import { CreateUserService } from "../../service/user/sign-up";
-import { generateJWT } from "./token";
+import { GenerateJWT } from "./token";
 import { logger } from "../../config/winston";
 
 const router = express.Router();
@@ -44,7 +44,7 @@ const SignUpRouter = router.post(
             const { id } = user;
 
             // get token
-            const userJwt = generateJWT(id, email);
+            const userJwt = GenerateJWT(id, email);
 
             // add token as cookie
             req.session = {
