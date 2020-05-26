@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
-import { ValidateRequest } from "@pinkelgrg/app-common";
+import { ValidateRequest, BadRequestError } from "@pinkelgrg/app-common";
 import { VerifyCredentials } from "../../service/user/sign-in";
 import { generateJWT } from "./token";
 import { logger } from "../../config/winston";
@@ -39,7 +39,12 @@ const SignInRouter = router.post(
         const { email, password } = req.body;
         try {
             const user = await VerifyCredentials(email, password);
-            const { id } = user;
+            const { id, isActive } = user;
+
+            // if user is not active:
+            if (!isActive) {
+                return next(new BadRequestError("This account has been disabled!"));
+            }
             const userJwt = generateJWT(id, email);
             req.session = {
                 jwt: userJwt
