@@ -5,6 +5,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: "true"
+    ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
     - host: pinkel.dev
@@ -13,4 +14,8 @@ spec:
           - path: /api/user/?(.*)
             backend:
               serviceName: auth-service
+              servicePort: 3000
+          - path: /?(.*)
+            backend:
+              serviceName: client-service
               servicePort: 3000

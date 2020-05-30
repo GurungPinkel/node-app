@@ -1,6 +1,6 @@
 # kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/cloud/deploy.yaml
 
-apiVersion: skaffold/v2alpha3
+apiVersion: skaffold/v2beta4
 kind: Config
 deploy:
   kubectl:
@@ -17,4 +17,12 @@ build:
       sync:
         manual:
           - src: "src/**/*.ts"
+            dest: .
+    - image: pinkelgrg/app-client
+      context: ../client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.{ts,scss,tsx}"
             dest: .
