@@ -5,9 +5,9 @@ FROM pinkelgrg/node-python:latest
 
 WORKDIR /client
 COPY package.json .
-RUN npm install --only=prod
+RUN npm install
 RUN node -v
 ENV CI=true
 COPY . .
 
-CMD ["npm",  "run", "start"]
+CMD ["npm",  "run", "dev"]

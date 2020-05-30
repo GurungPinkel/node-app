@@ -11,8 +11,7 @@
         "test": "jest --watchAll --no-cache",
         "test:ci": "jest",
         "test:coverage": "jest --watchAll --no-cache --coverage",
-        "lint": "pretty-quick --staged && lint-staged",
-        "now": "pretty-quick ."
+        "lint": "pretty-quick --staged && lint-staged"
     },
     "jest": {
         "preset": "ts-jest",
