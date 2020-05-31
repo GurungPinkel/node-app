@@ -18,11 +18,11 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: pinkelgrg/app-client
-      context: ../client
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "src/**/*.{ts,scss,tsx}"
-            dest: .
+    # - image: pinkelgrg/app-client
+    #   context: ../client
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: "src/**/*.{ts,scss,tsx}"
+    #         dest: .
