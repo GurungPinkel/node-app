@@ -1,5 +1,5 @@
-# docker build -t pinkelgrg/node-python .
-# docker push pinkelgrg/node-python
+# docker build -t pinkelgrg/node-python:latest .
+# docker push pinkelgrg/node-python:latest
 
 FROM centos:8.1.1911
 

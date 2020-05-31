@@ -1,5 +1,5 @@
-# docker build -t pinkelgrg/app-authentication .
-# docker push pinkelgrg/app-authentication
+# docker build -t pinkelgrg/app-authentication:latest .
+# docker push pinkelgrg/app-authentication:latest
 
 FROM pinkelgrg/node-python:latest
 
