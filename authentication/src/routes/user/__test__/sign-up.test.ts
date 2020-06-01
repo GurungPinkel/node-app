@@ -31,7 +31,7 @@ describe("sign up", () => {
         }
         await Promise.all(invalidRequests);
 
-        request(app)
+        await request(app)
             .post("/api/user/signup")
             .send({
                 password: "myfak3p@ssw0rd",
@@ -71,7 +71,7 @@ describe("sign up", () => {
         }
         await Promise.all(invalidRequests);
 
-        request(app)
+        await request(app)
             .post("/api/user/signup")
             .send({
                 email: "user@usermail.com",
@@ -111,7 +111,7 @@ describe("sign up", () => {
         }
         await Promise.all(invalidRequests);
 
-        request(app)
+        await request(app)
             .post("/api/user/signup")
             .send({
                 email: "user@usermail.com",
@@ -149,7 +149,7 @@ describe("sign up", () => {
         }
         await Promise.all(invalidRequests);
 
-        request(app)
+        await request(app)
             .post("/api/user/signup")
             .send({
                 password: "myfak3p@ssw0rd",
@@ -191,7 +191,7 @@ describe("sign up", () => {
         }
         await Promise.all(invalidRequests);
 
-        request(app)
+        await request(app)
             .post("/api/user/signup")
             .send({
                 firstname: "Firstname",
