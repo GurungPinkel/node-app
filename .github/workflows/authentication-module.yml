@@ -1,4 +1,4 @@
-name: authentication-tests
+name: authentication-module
 
 on:
   push:
