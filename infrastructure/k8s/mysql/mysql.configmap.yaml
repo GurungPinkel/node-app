@@ -4,5 +4,5 @@ metadata:
   name: mysql-initdb-config
 data:
   initdb.sql: |
-    create schema if not exists authentication;
-    create table if not exists authentication.USERS (	ID int auto_increment primary key, EMAIL varchar(255) not null, PASSWORD varchar(255) not null, IS_ACTIVE tinyint(1) default 1 not null, UPDATED_TIMESTAMP timestamp default CURRENT_TIMESTAMP not null on update current_timestamp,	CREATED_TIMESTAMP timestamp default CURRENT_TIMESTAMP not null,	constraint USERS_EMAIL_uindex unique (EMAIL));
+    create schema if not exists pinkelgrg;;
+    create table pinkelgrg.USERS( ID int auto_increment UNIQUE primary key, FIRST_NAME varchar(30) not null, MIDDLE_NAME varchar(30) null, LAST_NAME varchar(30) null, EMAIL varchar(50) UNIQUE not null, PASSWORD varchar(255) null, AUTHENTICATION_TYPE_ID int not null, THIRD_PARTY_USER_ID varchar(100) null, DATE_OF_BIRTH date not null, IS_ACTIVE tinyint(1) default 1 not null, CREATED_TIMESTAMP timestamp default CURRENT_TIMESTAMP not null, MODIFIED_TIMESTAMP timestamp null );
