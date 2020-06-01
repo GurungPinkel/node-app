@@ -1,4 +1,4 @@
-![authentication-module](https://github.com/GurungPinkel/node-app/workflows/authentication-tests/badge.svg)
+![authentication-module](https://github.com/GurungPinkel/node-app/workflows/authentication-module/badge.svg)
 
 # Before you begin
 
