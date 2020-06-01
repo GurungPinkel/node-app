@@ -7,7 +7,11 @@ it("should clear the cookie when user signs out", async () => {
         .post("/api/user/signup")
         .send({
             email: "mails@hotmail.com",
-            password: "abcdef1!"
+            password: "abcdef1!",
+            firstname: "firstname",
+            middlename: "middename",
+            lastname: "lastname",
+            dateofbirth: "1993-01-07"
         })
         .expect(201);
 

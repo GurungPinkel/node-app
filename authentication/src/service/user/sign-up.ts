@@ -16,12 +16,32 @@ import { logger } from "../../config/winston";
 const CreateUserService = async (user: UserAttributes) => {
     const existingUser = await findByEmailDAO(user.email);
     if (!existingUser) {
-        const hashedPassword = await Password.hash(user.password);
-        const newUser = await CreateUserDAO({
-            ...user,
-            password: hashedPassword
-        });
-        return newUser;
+        const {
+            firstName,
+            middleName,
+            lastName,
+            email,
+            password,
+            dateOfBirth,
+            isActive,
+            authenticationTypeId,
+            thirdPartyUserId
+        } = user;
+        if (authenticationTypeId === 1 && password) {
+            const hashedPassword = await Password.hash(password);
+            const newUser = await CreateUserDAO({
+                ...user,
+                password: hashedPassword
+            });
+            return newUser;
+        }
+
+        if (authenticationTypeId === 2) {
+            const newUser = await CreateUserDAO({
+                ...user
+            });
+            return newUser;
+        }
     }
     logger.debug(`User with ${user.email} already exists`);
     throw new BadRequestError(`User with ${user.email} already exists`);

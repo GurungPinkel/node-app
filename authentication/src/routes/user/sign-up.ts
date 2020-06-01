@@ -15,6 +15,26 @@ const router = express.Router();
 const SignUpRouter = router.post(
     "/api/user/signup",
     [
+        body("firstname")
+            .exists()
+            .withMessage("Invalid First Name! First Name must be provided")
+            .trim()
+            .isLength({ min: 1, max: 30 })
+            .withMessage(
+                "Invalid First Name!. First Name cannot exceed 30 characters in length"
+            ),
+        body("middlename")
+            .trim()
+            .isLength({ max: 30 })
+            .withMessage(
+                "Invalid Middle Name!. Middle Name cannot exceed 30 characters in length"
+            ),
+        body("lastname")
+            .trim()
+            .isLength({ max: 30 })
+            .withMessage(
+                "Invalid Last Name!. Last Name cannot exceed 30 characters in length"
+            ),
         body("email")
             .exists()
             .withMessage("Invalid Email! Email must be provided")
@@ -34,13 +54,35 @@ const SignUpRouter = router.post(
             )
             .withMessage(
                 "Invalid Password! Password must contain atleast 1 special character and 1 number"
-            )
+            ),
+        body("dateofbirth")
+            .exists()
+            .withMessage("Invalid Date of Birth! Date of Birth must be provied")
+            .matches(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)
+            .withMessage("Invalid Date of Birth")
     ],
     ValidateRequest,
     async (req: Request, res: Response, next: NextFunction) => {
-        const { email, password } = req.body;
+        const {
+            email,
+            password,
+            dateofbirth,
+            firstname,
+            middlename,
+            lastname
+        } = req.body;
         try {
-            const user = await CreateUserService({ email, password, isActive: true });
+            const user = await CreateUserService({
+                authenticationTypeId: 1,
+                dateOfBirth: dateofbirth,
+                email: email,
+                firstName: firstname,
+                middleName: middlename || null,
+                lastName: lastname || null,
+                isActive: true,
+                password: password,
+                thirdPartyUserId: null
+            });
             const { id } = user;
 
             // get token

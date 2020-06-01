@@ -8,9 +8,9 @@
         "start": "ts-node-dev --poll src/index.ts",
         "dev": "DEBUG=* ts-node-dev --poll src/index.ts",
         "clean": "rimraf ./target/*",
-        "test": "jest --watchAll --no-cache",
+        "test": "jest --watchAll --no-cache --runInBand --detectOpenHandles",
         "test:ci": "jest",
-        "test:coverage": "jest --watchAll --no-cache --coverage",
+        "test:coverage": "jest --watchAll --no-cache --coverage  --runInBand --detectOpenHandles",
         "lint": "pretty-quick --staged && lint-staged"
     },
     "jest": {

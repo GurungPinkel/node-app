@@ -26,7 +26,11 @@ describe("sign in with valid credentials", () => {
             .post("/api/user/signup")
             .send({
                 email: "signintest@user.com",
-                password: "useL@stP@55"
+                password: "useL@stP@55",
+                firstname: "firstname",
+                middlename: "middename",
+                lastname: "lastname",
+                dateofbirth: "1993-01-07"
             })
             .expect(201);
 
@@ -37,3 +41,5 @@ describe("sign in with valid credentials", () => {
         expect(response.get("Set-Cookie")).toBeDefined();
     });
 });
+
+// TODO: add test case for inactive user.
