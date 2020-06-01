@@ -1,6 +1,7 @@
 import "../config/env";
 import { sequelize } from "../config/sequelize";
 import { logger } from "../config/winston";
+
 // Disable the logger
 logger.silent = true;
 beforeAll(async () => {

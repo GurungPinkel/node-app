@@ -2,12 +2,11 @@ name: authentication-tests
 
 on:
   push:
-    paths: 
-      - 'authentication/**'
+    paths:
+      - "authentication/**"
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-        - uses: actions/checkout@v2
-        - run: cd authentication && npm install && npm run test:ci
-    
+      - uses: actions/checkout@v2
+      - run: cd authentication && npm install && npm run test:ci
