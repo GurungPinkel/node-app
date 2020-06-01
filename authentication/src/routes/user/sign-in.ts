@@ -7,11 +7,6 @@ import { logger } from "../../config/winston";
 
 const router = express.Router();
 
-/*
-    Param:
-        email:string
-        password: string
-*/
 const SignInRouter = router.post(
     "/api/user/signin",
     [
