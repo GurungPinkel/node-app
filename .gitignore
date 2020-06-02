@@ -107,4 +107,5 @@ dist
 
 target
 .DS_Store
+.env.local
 /temp
