@@ -15,3 +15,19 @@ spec:
       containers:
         - name: client
           image: pinkelgrg/app-client
+          env:
+            - name: FACEBOOK_LOGIN_HOST_URL
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: FACEBOOK_LOGIN_HOST_URL
+            - name: FACEBOOK_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: FACEBOOK_CLIENT_ID
+            - name: FACEBOOK_REDIRECT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: FACEBOOK_REDIRECT_URL
