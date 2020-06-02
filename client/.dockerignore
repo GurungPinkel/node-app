@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+coverage
+logs
+target
+Dockerfile
+.git
+**/*.swp
+**/*.tsx~
+**/*.swn
+**/*.swo
