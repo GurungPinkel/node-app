@@ -5,3 +5,4 @@ export * from "./errors/custom-error";
 
 export * from "./middlewares/request-validation";
 export * from "./middlewares/error-handler";
+export * from "./middlewares/current-user";
