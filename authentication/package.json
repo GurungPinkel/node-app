@@ -34,7 +34,7 @@
         }
     },
     "dependencies": {
-        "@pinkelgrg/app-common": "^1.0.14",
+        "@pinkelgrg/app-common": "^1.0.15",
         "@types/bcryptjs": "^2.4.2",
         "@types/compression": "^1.7.0",
         "@types/cookie-session": "^2.0.39",
@@ -43,6 +43,7 @@
         "@types/jsonwebtoken": "^8.5.0",
         "@types/morgan": "^1.9.0",
         "@types/node": "^14.0.5",
+        "@types/node-fetch": "^2.5.7",
         "@types/split": "^1.0.0",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.19.0",
@@ -56,6 +57,7 @@
         "jsonwebtoken": "^8.5.1",
         "morgan": "^1.10.0",
         "mysql2": "^2.1.0",
+        "node-fetch": "^2.6.0",
         "sequelize": "^5.21.10",
         "split": "^1.0.1",
         "supertest": "^4.0.2",

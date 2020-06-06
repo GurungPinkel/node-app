@@ -9,7 +9,7 @@ import { NotFoundError, ErrorHandler, CustomError } from "@pinkelgrg/app-common"
 import { logger, stream } from "./config/winston";
 
 import { SignUpRouter } from "./routes/user/sign-up";
-import { SignInRouter } from "./routes/user/sign-in";
+import { SignInRouter, FacebookSignInRouter } from "./routes/user/sign-in";
 import { SignOutRouter } from "./routes/user/sign-out";
 
 const app = express();
@@ -40,6 +40,7 @@ app.use(
 app.use(SignUpRouter);
 app.use(SignInRouter);
 app.use(SignOutRouter);
+app.use(FacebookSignInRouter);
 
 app.all("*", () => {
     throw new NotFoundError("404: Not Found");

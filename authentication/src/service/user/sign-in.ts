@@ -3,7 +3,7 @@ import { findByEmailDAO } from "../../dao/user/find";
 import { Password } from "../../utils/password";
 import { logger } from "../../config/winston";
 
-export const VerifyCredentials = async (email: string, password: string) => {
+const VerifyCredentials = async (email: string, password: string) => {
     const user = await findByEmailDAO(email);
     if (!user) {
         logger.info(`Invalid email. User does not exist: ${email}`);
@@ -17,3 +17,10 @@ export const VerifyCredentials = async (email: string, password: string) => {
     }
     return user;
 };
+
+const FindUserByEmail = async (email: string) => {
+    const existingUser = await findByEmailDAO(email);
+    return existingUser;
+};
+
+export { VerifyCredentials, FindUserByEmail };

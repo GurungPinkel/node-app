@@ -10,7 +10,7 @@ const logFormat = printf((data) => {
 });
 
 const errorFormat = printf((data) => {
-    return `[${data.level}]: ${data.timestamp} - ${data.stack}`;
+    return `[${data.level}]: ${data.timestamp} - ${data.message} ${data.stack || ""}`;
 });
 
 const consoleFormat = printf((data) => {
