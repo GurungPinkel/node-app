@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import express, { Request, Response, NextFunction } from "express";
-import { body, query } from "express-validator";
+import { body } from "express-validator";
 import fetch from "node-fetch";
 import { ValidateRequest, BadRequestError } from "@pinkelgrg/app-common";
 import { VerifyCredentials, FindUserByEmail } from "../../service/user/sign-in";
@@ -8,6 +9,20 @@ import { GenerateJWT } from "../../utils/jwtToken";
 import { logger } from "../../config/winston";
 
 const router = express.Router();
+
+const GetFacebookUserProfile = async (token: string) => {
+    const url = `${process.env.FACEBOOK_GET_PROFILE_HOST}?fields=${process.env.FACEBOOK_PROFILE_FIELDS}&access_token=${token}`;
+    const response = await fetch(url);
+    const json = await response.json();
+    return json;
+};
+
+const GetFacebookToken = async (code: string) => {
+    const url = `${process.env.FACEBOOK_GET_TOKEN_HOST}?client_id=${process.env.FACEBOOK_CLIENT_ID}&redirect_uri=${process.env.FACEBOOK_REDIRECT_URL}&client_secret=${process.env.FACEBOOK_LOGIN_SECRET}&code=${code}`;
+    const response = await fetch(url);
+    const json = await response.json();
+    return json;
+};
 
 const SignInRouter = router.post(
     "/api/user/signin",
@@ -48,7 +63,7 @@ const SignInRouter = router.post(
             };
 
             logger.debug(`User loggedIn!: ${email}`);
-            return res.status(200).send({ id, email });
+            return res.redirect(302, "/");
         } catch (err) {
             return next(err);
         }
@@ -57,8 +72,6 @@ const SignInRouter = router.post(
 
 const FacebookSignInRouter = router.get(
     "/api/user/facebook/callback",
-    [query("code").exists().notEmpty().withMessage("Unable to login using facebook")],
-    ValidateRequest,
     async (req: Request, res: Response, next: NextFunction) => {
         const { code } = req.query;
         if (typeof code === "undefined" || code === null) {
@@ -70,6 +83,7 @@ const FacebookSignInRouter = router.get(
             const { access_token } = facebookToken;
             if (!access_token) {
                 return res.redirect(
+                    302,
                     `/signin?error=${encodeURIComponent("Unable to login with facebook")}`
                 );
             }
@@ -78,7 +92,10 @@ const FacebookSignInRouter = router.get(
             const { id, first_name, middle_name, last_name, email } = fbUser;
             if (!email) {
                 return res.redirect(
-                    `/signin?error=${encodeURIComponent("Unable to login with facebook")}`
+                    302,
+                    `/signin?error=${encodeURIComponent(
+                        "Unable to login. Email not provided"
+                    )}`
                 );
             }
 
@@ -87,7 +104,7 @@ const FacebookSignInRouter = router.get(
                 const user = await CreateUserService({
                     authenticationTypeId: 2,
                     dateOfBirth: new Date("1975-05-13"), // TODO hardcoded date- needs review from facebook app so use hardcoded for now.
-                    email: email,
+                    email,
                     firstName: first_name,
                     middleName: middle_name || null,
                     lastName: last_name || null,
@@ -99,7 +116,7 @@ const FacebookSignInRouter = router.get(
                 req.session = {
                     jwt: userJwt
                 };
-                return res.redirect("/demo");
+                return res.redirect(302, "/");
             }
 
             const userJwt = GenerateJWT(existingUser.id, email);
@@ -107,28 +124,17 @@ const FacebookSignInRouter = router.get(
             req.session = {
                 jwt: userJwt
             };
-            return res.redirect("/");
+            return res.redirect(302, "/");
         } catch (err) {
             logger.error("[FacebookSignInRouter] : ", err);
             return res.redirect(
-                `/signin?error=${encodeURIComponent("Unable to login with facebook")}`
+                302,
+                `/signin?error=${encodeURIComponent(
+                    "An error occured while trying to authenticate with facebook"
+                )}`
             );
         }
     }
 );
-
-const GetFacebookUserProfile = async (token: string) => {
-    const url = `${process.env.FACEBOOK_GET_PROFILE_HOST}?fields=${process.env.FACEBOOK_PROFILE_FIELDS}&access_token=${token}`;
-    const response = await fetch(url);
-    const json = await response.json();
-    return json;
-};
-
-const GetFacebookToken = async (code: string) => {
-    const url = `${process.env.FACEBOOK_GET_TOKEN_HOST}?client_id=${process.env.FACEBOOK_CLIENT_ID}&redirect_uri=${process.env.FACEBOOK_REDIRECT_URL}&client_secret=${process.env.FACEBOOK_LOGIN_SECRET}&code=${code}`;
-    const response = await fetch(url);
-    const json = await response.json();
-    return json;
-};
 
 export { SignInRouter, FacebookSignInRouter, GetFacebookUserProfile, GetFacebookToken };

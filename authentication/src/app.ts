@@ -11,6 +11,7 @@ import { logger, stream } from "./config/winston";
 import { SignUpRouter } from "./routes/user/sign-up";
 import { SignInRouter, FacebookSignInRouter } from "./routes/user/sign-in";
 import { SignOutRouter } from "./routes/user/sign-out";
+import { CurrentUserRouter } from "./routes/user/current-user";
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.use(SignUpRouter);
 app.use(SignInRouter);
 app.use(SignOutRouter);
 app.use(FacebookSignInRouter);
+app.use(CurrentUserRouter);
 
 app.all("*", () => {
     throw new NotFoundError("404: Not Found");

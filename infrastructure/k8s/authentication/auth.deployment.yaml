@@ -71,3 +71,38 @@ spec:
                 secretKeyRef:
                   name: environment
                   key: APP_PORT
+            - name: FACEBOOK_GET_TOKEN_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: FACEBOOK_GET_TOKEN_HOST
+            - name: FACEBOOK_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: FACEBOOK_CLIENT_ID
+            - name: FACEBOOK_REDIRECT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: FACEBOOK_REDIRECT_URL
+            - name: FACEBOOK_LOGIN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: FACEBOOK_LOGIN_SECRET
+            - name: FACEBOOK_GET_TOKEN_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: FACEBOOK_GET_TOKEN_HOST
+            - name: FACEBOOK_GET_PROFILE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: FACEBOOK_GET_PROFILE_HOST
+            - name: FACEBOOK_PROFILE_FIELDS
+              valueFrom:
+                secretKeyRef:
+                  name: environment
+                  key: FACEBOOK_PROFILE_FIELDS

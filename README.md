@@ -38,3 +38,6 @@
 to connect to mysql from local, use port forwarding.
 e.g:
 kubectl port-forward <mysql-deployment> 3305:3306
+
+ssh to a pod:
+kubectl exec -it <pod-deployment> -- /bin/bash

@@ -1,6 +1,9 @@
 import "../config/env";
+import fetch from "jest-fetch-mock";
 import { sequelize } from "../config/sequelize";
 import { logger } from "../config/winston";
+
+jest.setMock("node-fetch", fetch);
 
 // Disable the logger
 logger.silent = true;

@@ -16,17 +16,7 @@ import { logger } from "../../config/winston";
 const CreateUserService = async (user: UserAttributes) => {
     const existingUser = await findByEmailDAO(user.email);
     if (!existingUser) {
-        const {
-            firstName,
-            middleName,
-            lastName,
-            email,
-            password,
-            dateOfBirth,
-            isActive,
-            authenticationTypeId,
-            thirdPartyUserId
-        } = user;
+        const { password, authenticationTypeId } = user;
         if (authenticationTypeId === 1 && password) {
             const hashedPassword = await Password.hash(password);
             const newUser = await CreateUserDAO({
@@ -35,7 +25,6 @@ const CreateUserService = async (user: UserAttributes) => {
             });
             return newUser;
         }
-
         if (authenticationTypeId === 2) {
             const newUser = await CreateUserDAO({
                 ...user
