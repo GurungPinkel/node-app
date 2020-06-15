@@ -4,7 +4,7 @@
 FROM pinkelgrg/node-python:latest
 
 WORKDIR /authentication
-COPY package.json .
+COPY package*.json ./
 RUN npm install
 RUN node -v
 COPY . .
