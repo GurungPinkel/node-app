@@ -1,10 +1,8 @@
-import "bootstrap/dist/css/bootstrap.css";
+import "../scss/index.scss";
 import getCurrentUser from "../api/current-user";
 
 const AppComponent = ({ Component, pageProps, currentUser }) => (
-  <div>
-    <Component {...pageProps} currentUser={currentUser} />
-  </div>
+  <Component {...pageProps} currentUser={currentUser} />
 );
 
 AppComponent.getInitialProps = async (appContext) => {

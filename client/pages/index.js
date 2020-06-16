@@ -1,19 +1,21 @@
+import NextHead from "next/head";
+import HeaderComponent from "../components/header";
 const Home = ({ currentUser }) => {
   return (
-    <div>
-      <h1> Home </h1>
-      <h2>{currentUser.email}</h2>
-    </div>
+    <>
+      <NextHead>
+        <title> Change Me! | I am title </title>
+        <meta
+          name="description"
+          content="Change Me! I am Description meta tag"
+        ></meta>
+      </NextHead>
+      <HeaderComponent />
+      <div>
+        <h1> Home </h1>
+      </div>
+    </>
   );
 };
-Home.getInitialProps = async (context, client, currentUser) => {
-  const { res } = context;
-  if (!currentUser && res) {
-    res.writeHead(301, {
-      Location: "/signin",
-    });
-    res.end();
-  }
-  return {};
-};
+Home.getInitialProps = async (context, client, currentUser) => {};
 export default Home;
