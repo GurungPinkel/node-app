@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 module.exports = {
   poweredByHeader: false,
   generateEtags: false,
@@ -8,4 +6,5 @@ module.exports = {
     FACEBOOK_CLIENT_ID: process.env.FACEBOOK_CLIENT_ID,
     FACEBOOK_REDIRECT_URL: process.env.FACEBOOK_REDIRECT_URL,
   },
+  distDir: "dist",
 };

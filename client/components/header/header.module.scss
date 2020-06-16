@@ -1,2 +1,9 @@
-.header {
+.headerComponent {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: solid 1px #ccc;
+  box-shadow: 0px 0px 1px 1px #000;
+  background-color: #fefefe;
+  background: linear-gradient(to bottom, white, black);
 }

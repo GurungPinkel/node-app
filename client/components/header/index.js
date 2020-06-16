@@ -1,9 +1,11 @@
 import React from "react";
+import styles from "./header.module.scss";
 
 const HeaderComponent = ({ currentUser }) => {
   return (
-    <header>
-      <div> Header </div>
+    <header className={styles.headerComponent}>
+      <div> Header Logo </div>
+      <div> Menus </div>
     </header>
   );
 };
