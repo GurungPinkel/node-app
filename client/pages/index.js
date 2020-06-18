@@ -10,7 +10,7 @@ const Home = ({ currentUser }) => {
           content="Change Me! I am Description meta tag"
         ></meta>
       </NextHead>
-      <HeaderComponent />
+      <HeaderComponent currentUser={currentUser} />
       <div>
         <h1> Home </h1>
       </div>

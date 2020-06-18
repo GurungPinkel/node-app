@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
+import UserMenu from "../menu/user";
 import styles from "./header.module.scss";
 
 const HeaderComponent = ({ currentUser }) => {
   return (
     <header className={styles.headerComponent}>
       <div> Header Logo </div>
-      <div> Menus </div>
+      <UserMenu currentUser={currentUser} />
     </header>
   );
 };
