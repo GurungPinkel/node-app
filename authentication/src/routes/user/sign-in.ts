@@ -57,7 +57,7 @@ const SignInRouter = router.post(
             if (!isActive) {
                 return next(new BadRequestError("This account has been disabled!"));
             }
-            const userJwt = GenerateJWT(id, email);
+            const userJwt = GenerateJWT(user);
             req.session = {
                 jwt: userJwt
             };
@@ -112,14 +112,14 @@ const FacebookSignInRouter = router.get(
                     password: null,
                     thirdPartyUserId: id
                 });
-                const userJwt = GenerateJWT(user.id, email);
+                const userJwt = GenerateJWT(user);
                 req.session = {
                     jwt: userJwt
                 };
                 return res.redirect(302, "/");
             }
 
-            const userJwt = GenerateJWT(existingUser.id, email);
+            const userJwt = GenerateJWT(existingUser);
 
             req.session = {
                 jwt: userJwt

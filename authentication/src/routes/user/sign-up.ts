@@ -58,7 +58,7 @@ const SignUpRouter = router.post(
         body("dateofbirth")
             .exists()
             .withMessage("Invalid Date of Birth! Date of Birth must be provied")
-            .matches(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)
+            .matches(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)
             .withMessage("Invalid Date of Birth")
     ],
     ValidateRequest,
@@ -75,18 +75,18 @@ const SignUpRouter = router.post(
             const user = await CreateUserService({
                 authenticationTypeId: 1,
                 dateOfBirth: dateofbirth,
-                email: email,
+                email,
                 firstName: firstname,
                 middleName: middlename || null,
                 lastName: lastname || null,
                 isActive: true,
-                password: password,
+                password,
                 thirdPartyUserId: null
             });
             const { id } = user;
 
             // get token
-            const userJwt = GenerateJWT(id, email);
+            const userJwt = GenerateJWT(user);
 
             // add token as cookie
             req.session = {
