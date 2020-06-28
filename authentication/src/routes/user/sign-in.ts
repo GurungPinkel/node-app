@@ -51,7 +51,7 @@ const SignInRouter = router.post(
         const { email, password } = req.body;
         try {
             const user = await VerifyCredentials(email, password);
-            const { id, isActive } = user;
+            const { isActive } = user;
 
             // if user is not active:
             if (!isActive) {
@@ -61,9 +61,8 @@ const SignInRouter = router.post(
             req.session = {
                 jwt: userJwt
             };
-
             logger.debug(`User loggedIn!: ${email}`);
-            return res.redirect(302, "/");
+            return res.status(200).send({});
         } catch (err) {
             return next(err);
         }

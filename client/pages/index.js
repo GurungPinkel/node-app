@@ -1,6 +1,7 @@
 import NextHead from "next/head";
 import HeaderComponent from "../components/header";
 const Home = ({ currentUser }) => {
+  console.log(currentUser);
   return (
     <>
       <NextHead>
@@ -17,5 +18,7 @@ const Home = ({ currentUser }) => {
     </>
   );
 };
-Home.getInitialProps = async (context, client, currentUser) => {};
+Home.getInitialProps = async (context, client, currentUser) => {
+  return currentUser;
+};
 export default Home;

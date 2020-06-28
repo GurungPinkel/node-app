@@ -48,7 +48,7 @@ describe("SignInRouter", () => {
         const response = await request(app)
             .post("/api/user/signin")
             .send({ email: "signintest@user.com", password: "useL@stP@55" })
-            .expect(302);
+            .expect(200);
         expect(response.get("Set-Cookie")).toBeDefined();
     });
 
@@ -89,7 +89,7 @@ describe("SignInRouter", () => {
         const response = await request(app)
             .post("/api/user/signin")
             .send({ email: "signintest@user.com", password: "useL@stP@55" })
-            .expect(302);
+            .expect(200);
         expect(response.get("Set-Cookie")).toBeDefined();
     });
 });

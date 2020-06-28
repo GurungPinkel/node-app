@@ -20,11 +20,11 @@ it("should clear the cookie when user signs out", async () => {
     const signin = await request(app)
         .post("/api/user/signin")
         .send({ email: "mails@hotmail.com", password: "abcdef1!" })
-        .expect(302);
+        .expect(200);
     expect(signin.get("Set-Cookie")).toBeDefined();
 
     // signout to confirm that cookie was removed.
-    const signout = await request(app).post("/api/user/signout").send({}).expect(200);
+    const signout = await request(app).post("/api/user/signout").expect(200);
     expect(signout.get("Set-Cookie")[0]).toEqual(
         "express:sess=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httponly"
     );

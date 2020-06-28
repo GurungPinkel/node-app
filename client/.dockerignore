@@ -4,6 +4,7 @@ coverage
 logs
 target
 Dockerfile
+draw.io
 .env*
 .git
 **/*.swp
