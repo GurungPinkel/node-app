@@ -16,10 +16,6 @@ const SignIn = () => {
       </NextHead>
       <div className={styles.SignIn}>
         <SignInForm />
-        {/*<h1> Sign In </h1>
-        <a href={facebookLoginUrl} className="facebook-login-button">
-          Login with Facebook
-        </a> */}
       </div>
     </>
   );

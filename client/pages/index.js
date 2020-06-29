@@ -1,7 +1,6 @@
 import NextHead from "next/head";
 import HeaderComponent from "../components/header";
 const Home = ({ currentUser }) => {
-  console.log(currentUser);
   return (
     <>
       <NextHead>

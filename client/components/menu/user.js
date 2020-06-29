@@ -9,13 +9,10 @@ const UserMenu = ({ currentUser }) => {
   const isLoggedIn = currentUser && currentUser !== null;
 
   const signOutHandler = async () => {
-    console.log("signout");
     try {
       await AuthenticationApi(`/api/user/signout`);
       Router.push("/signin");
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const toggleMenuHandler = () => {

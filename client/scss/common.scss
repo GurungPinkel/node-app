@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  outline: 0;
 }
 html,
 body {
@@ -11,10 +12,77 @@ body {
   font-size: 13px;
 }
 
-.title {
-  font-size: 1.5rem;
+.title_lg {
+  font-size: 1.8rem;
+}
+.title_sm {
+  font-size: 1.2rem;
 }
 
 .bold {
   font-weight: bold;
+}
+
+.inputBox {
+  padding: 0.7rem;
+  margin: 0.5rem 0;
+  border: solid 1px #ccc;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 1px 1px rgba(20, 23, 28, 0.1),
+    0 0px 2px 0 rgba(20, 23, 28, 0.1);
+  outline: 0;
+
+  &.danger {
+    border: solid 1px red;
+  }
+}
+
+.signinButton,
+.signupButton {
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: solid 1px #40a344;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 1px 1px rgba(51, 150, 55, 1), 0 0px 2px 0 rgba(51, 150, 55, 1);
+  background: #339637;
+  color: #fff;
+  outline: 0;
+  cursor: pointer;
+  &:active {
+    box-shadow: 0 0 0 #40a344;
+  }
+  &:hover {
+    background: #40a344;
+  }
+  &.fbSigninButton {
+    text-align: center;
+    text-decoration: none;
+    color: #fff !important;
+    &:hover {
+      color: #fff !important;
+      text-decoration: none !important;
+    }
+  }
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.link {
+  color: #385898;
+  text-decoration: none;
+  &.noDecoration {
+    text-decoration: none;
+    color: #385898;
+  }
+  &.decoration {
+    &:hover {
+      color: #385898;
+      text-decoration: underline;
+    }
+  }
+}
+.dangerText {
+  color: red;
 }

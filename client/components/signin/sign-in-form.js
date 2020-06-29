@@ -36,7 +36,6 @@ const SignInForm = () => {
       })
       .catch((err) => {
         if (err.response && err.response.data) {
-          console.log("err.response", err.response.data.errors);
           setErrors(err.response.data.errors || []);
         }
       });
@@ -47,7 +46,7 @@ const SignInForm = () => {
         <Toast messages={errors} onClose={toastCloseHandler} type="error" />
       ) : null}
       <div className={styles.SignInForm}>
-        <div className={`title`}>
+        <div className={`title_lg`}>
           <center>Sign In </center>
         </div>
         <form
@@ -70,24 +69,28 @@ const SignInForm = () => {
               value={password}
               onChange={passwordChangeHandler}
             />
-            <button type="submit" className={styles.signinButton}>
+            <button type="submit" className={`signinButton`}>
               Sign In
             </button>
           </div>
           <Link href="/reset-password">
-            <a className={`${styles.centerAlign} bold`}> Forgot Passowrd?</a>
+            <a className={`bold link textCenter decoration`}>
+              Forgot Passowrd?
+            </a>
           </Link>
           <div className={styles.dottedLine}></div>
           <div className={styles.facebookLoginButton}>
             <a
               href={facebookLoginUrl}
-              className={`${styles.signinButton} ${styles.fbSigninButton}`}
+              className={`signinButton fbSigninButton`}
             >
               Login with Facebook
             </a>
           </div>
-          <Link href="/sign-up">
-            <a className={`${styles.centerAlign} bold`}> New user? Sign Up</a>
+          <Link href="/signup">
+            <a className={`bold link textCenter decoration`}>
+              New user? Sign Up
+            </a>
           </Link>
         </form>
       </div>

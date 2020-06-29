@@ -41,37 +41,5 @@
       display: flex;
       flex-direction: column;
     }
-    .signinButton {
-      padding: 0.8rem;
-      margin: 0.5rem 0;
-      border: solid 1px #40a344;
-      border-radius: 0.5rem;
-      box-shadow: 0 0 1px 1px rgba(51, 150, 55, 1),
-        0 0px 2px 0 rgba(51, 150, 55, 1);
-      background: #339637;
-      color: #fff;
-      outline: 0;
-      &:active {
-        box-shadow: 0 0 0 #40a344;
-      }
-      &:hover {
-        background: #40a344;
-      }
-      &.fbSigninButton {
-        text-align: center;
-        text-decoration: none;
-        &:hover {
-          color: #fff;
-        }
-      }
-    }
-    a {
-      color: #444;
-      text-decoration: none;
-      &:hover {
-        color: #c45500;
-        text-decoration: underline;
-      }
-    }
   }
 }

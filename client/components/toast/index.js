@@ -13,7 +13,6 @@ const Toast = (props) => {
         <div className={`${styles[toastType]} ${styles.toastContainer}`}>
           <ul>
             {messages.map((item) => {
-              console.log(item);
               return (
                 <li key={item.message}>
                   <div>

@@ -1,4 +1,5 @@
 import "../scss/index.scss";
+import "react-datepicker/dist/react-datepicker.min.css";
 import getCurrentUser from "../api/current-user";
 
 const AppComponent = ({ Component, pageProps, currentUser }) => (
