@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import styles from "./sign-up-form.module.scss";
 
 const SignUpForm = () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [birdayDate, setBirdayDate] = useState(new Date());
   const [isLoading, setIsLoading] = useState(false);
   const formConfig = {
     initialValues: {
@@ -55,11 +55,19 @@ const SignUpForm = () => {
     handleSubmit,
   } = CustomForm({
     config: formConfig,
-    onSubmit: () => formSubmitHandler,
+    onSubmit: (formErrors) => formSubmitHandler(formErrors),
   });
-
-  const formSubmitHandler = () => {
-    console.log(values);
+  const formSubmitHandler = (formErrors) => {
+    let shouldSubmitForm = true;
+    Object.keys(formErrors).map((key) => {
+      if (formErrors[key] && formErrors[key].length > 0) {
+        shouldSubmitForm = false;
+      }
+      return;
+    });
+    if (shouldSubmitForm) {
+      console.log("Submit the form");
+    }
   };
 
   const displayErrors = (key) => {
@@ -88,8 +96,8 @@ const SignUpForm = () => {
     <div className={styles.SignUpForm}>
       <div className={`title_lg`}>Sign Up</div>
       <form onSubmit={handleSubmit}>
-        <div className={`${styles.inputFields}`}>
-          <div className={`${styles.inputField}`}>
+        <div className={styles.inputFields}>
+          <div className={styles.inputField}>
             <input
               type="text"
               name="firstName"
@@ -147,10 +155,12 @@ const SignUpForm = () => {
           <div className={`${styles.label} title_sm`}> Birthday </div>
           <div className={`${styles.inputField}`}>
             <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              maxDate={new Date()}
+              selected={birdayDate}
+              onChange={(date) => setBirdayDate(date)}
+              maxDate={birdayDate}
               peekNextMonth
+              name="birthday"
+              onChange={handleInputChange}
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"

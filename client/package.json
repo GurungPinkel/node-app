@@ -8,18 +8,18 @@
     "start": "next start"
   },
   "dependencies": {
-    "autoprefixer": "^9.8.0",
+    "autoprefixer": "^9.8.4",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
+    "date-fns": "^2.14.0",
     "dotenv": "^8.2.0",
-    "lodash": "^4.17.15",
     "next": "9.4.4",
     "prettier": "^2.0.5",
     "react": "16.13.1",
     "react-datepicker": "^3.0.0",
     "react-dom": "16.13.1",
     "react-icons": "^3.10.0",
-    "sass": "^1.26.8"
+    "sass": "^1.26.9"
   },
   "browserslist": [
     ">0.1%",

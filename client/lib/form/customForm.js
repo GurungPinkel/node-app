@@ -6,7 +6,6 @@ const CustomForm = ({ config, onSubmit }) => {
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [onSubmitting, setOnSubmitting] = useState(false);
-  const [onBlur, setOnBlur] = useState(false);
 
   // const formRendered = useRef(true);
   useEffect(() => {
@@ -15,20 +14,21 @@ const CustomForm = ({ config, onSubmit }) => {
     setErrors({});
     setTouched({});
     setOnSubmitting(false);
-    setOnBlur(false);
     // }
     // formRendered.current = false;
   }, []);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event, name) => {
     const { target } = event;
+    console.log(target);
     const { name, value } = target;
     event.persist();
     setValues({ ...values, [name]: value });
     if (touched[name]) {
       const validationRules = validations[name];
       if (validationRules) {
-        validate(name, validationRules, value);
+        const currentErrors = validate(name, validationRules, value);
+        setErrors({ ...errors, [name]: currentErrors });
       }
     }
   };
@@ -41,12 +41,12 @@ const CustomForm = ({ config, onSubmit }) => {
 
   const handleSubmit = (event) => {
     if (event) event.preventDefault();
-    onSubmit({ values, errors });
+    const formErrors = validateAllFields();
+    onSubmit(formErrors);
   };
 
   const validate = (name, rulesObject, value) => {
     const currentErrors = [];
-    setErrors({ ...errors, [name]: currentErrors });
     if (name && rulesObject && rulesObject.length > 0) {
       rulesObject.map((rule) => {
         let isValid = true;
@@ -55,10 +55,29 @@ const CustomForm = ({ config, onSubmit }) => {
 
         if (!isValid) {
           rule.message ? currentErrors.push(rule.message) : null;
-          setErrors({ ...errors, [name]: currentErrors });
         }
       });
+      return currentErrors;
     }
+  };
+
+  const validateAllFields = () => {
+    const formErrors = {};
+    const touched = {};
+    Object.keys(validations).map((key) => {
+      const currentFieldValue = values[key];
+      const currentFieldValidation = validations[key];
+      const currentErrors = validate(
+        key,
+        currentFieldValidation,
+        currentFieldValue
+      );
+      formErrors[key] = currentErrors;
+      touched[key] = true;
+    });
+    setErrors(formErrors);
+    setTouched(touched);
+    return formErrors;
   };
 
   const validateRegex = (regex, value) => {
@@ -69,6 +88,7 @@ const CustomForm = ({ config, onSubmit }) => {
     values,
     errors,
     touched,
+    onSubmitting,
     handleInputChange,
     handleBlur,
     handleSubmit,
